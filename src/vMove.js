@@ -19,10 +19,12 @@ const handleMouseDown = (e) => {
 
 const handleMouseMove = (e) => {
   console.log('move');
-  const changedX = startLeft + e.clientX - startX;
-  const changedY = startTop + e.clientY - startY;
-  currentEl.style.left = `${changedX}px`;
-  currentEl.style.top = `${changedY}px`;
+  const changedX = e.clientX - startX;
+  const changedY = e.clientY - startY;
+  const newX = startLeft + changedX;
+  const newY = startTop + changedY;
+  currentEl.style.left = `${newX}px`;
+  currentEl.style.top = `${newY}px`;
 };
 
 const handleMouseUp = (e) => {

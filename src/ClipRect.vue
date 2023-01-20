@@ -1,5 +1,4 @@
 <script setup>
-import { defineExpose } from 'vue';
 import { videoWidth, videoHeight } from './consts';
 import vMove from './vMove';
 import vChangeSize from './vChangeSize';
