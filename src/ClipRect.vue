@@ -3,20 +3,12 @@ import { videoWidth, videoHeight } from './consts';
 import vMove from './vMove';
 import vChangeSize from './vChangeSize';
 
-const rectStyle = {
-  width: `${videoWidth}px`,
-  height: `${videoHeight}px`,
-  left: '0px',
-  top: '0px',
-};
-
-defineExpose({
-  clipRect: rectStyle,
-});
+const videoWidthPx = `${videoWidth}px`;
+const videoHeightPx = `${videoHeight}px`;
 </script>
 
 <template>
-  <div class="clip-rect" v-change-size v-move :style="rectStyle">
+  <div class="clip-rect" v-change-size v-move>
     <div class="corner" data-index="1"></div>
     <div class="corner" data-index="2"></div>
     <div class="corner" data-index="3"></div>
@@ -28,6 +20,10 @@ defineExpose({
 .clip-rect {
   position: fixed;
   border: 1px solid red;
+  left: 0px;
+  top: 0px;
+  width: v-bind(videoWidthPx);
+  height: v-bind(videoHeightPx);
   cursor: move;
   .corner {
     width: 10px;

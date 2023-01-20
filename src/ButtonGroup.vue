@@ -11,6 +11,7 @@ let ctx;
 let timeId;
 let stream;
 let recorder;
+let clipRect;
 
 onMounted(() => {
   video = document.getElementById('video');
@@ -69,11 +70,22 @@ const capture = () => {
 
 //开始转gif
 const onPlay = () => {
+  clipRect = document.querySelector('.clip-rect');
+  const rect = clipRect.getBoundingClientRect();
+  const {
+    left: rectLeft,
+    top: rectTop,
+    width: rectWidth,
+    height: rectHeight,
+  } = rect;
+
+  console.log({ rectLeft, rectTop, rectWidth, rectHeight });
+
   gif = new GIF({
     workers: 2,
     quality: 10,
-    width: videoWidth,
-    height: videoHeight,
+    width: rectWidth,
+    height: rectHeight,
     workerScript: '/gif.worker.js',
   });
   video.play();
