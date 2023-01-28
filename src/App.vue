@@ -1,7 +1,7 @@
 <script setup>
 import ButtonGroup from './ButtonGroup.vue';
 import ClipRect from './ClipRect.vue';
-import { videoStyle } from './consts';
+import { videoStyle } from './store';
 </script>
 
 <template>
@@ -16,7 +16,10 @@ import { videoStyle } from './consts';
 .app {
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   #video {
     border: 1px solid black;
   }

@@ -7,6 +7,8 @@ let startTop;
 let startWidth;
 let startHeight;
 let cornerIndex;
+let maxWidth;
+let maxHeight;
 
 const changeMap = {
   1: {
@@ -42,11 +44,10 @@ const handleMouseDown = (e) => {
   cornerIndex = e.target.dataset.index;
   startX = e.clientX;
   startY = e.clientY;
-  const rect = currentEl.getBoundingClientRect();
-  startLeft = rect.x;
-  startTop = rect.y;
-  startWidth = rect.width;
-  startHeight = rect.height;
+  startLeft = currentEl.offsetLeft;
+  startTop = currentEl.offsetTop;
+  startWidth = currentEl.clientWidth;
+  startHeight = currentEl.clientHeight;
   console.log('down', {
     startX,
     startY,
@@ -76,7 +77,12 @@ const handleMouseMove = (e) => {
   newTop = startTop + changedY * y;
   newHeight = startHeight + changedY * h;
 
+  console.log(newLeft + newWidth, newTop + newHeight);
+
+  if (newLeft < 0 || newTop < 0) return;
   if (newWidth < LimitSize || newHeight < LimitSize) return;
+  if (newLeft + newWidth > maxWidth) return;
+  if (newTop + newHeight > maxHeight) return;
 
   console.log({ newLeft, newTop, newWidth, newHeight });
   currentEl.style.left = `${newLeft}px`;
@@ -94,7 +100,9 @@ const handleMouseUp = (e) => {
 };
 
 const changeSize = {
-  mounted(el) {
+  mounted(el, { value }) {
+    maxWidth = value.maxWidth;
+    maxHeight = value.maxHeight;
     el.addEventListener('mousedown', handleMouseDown);
   },
   beforeMount(el) {

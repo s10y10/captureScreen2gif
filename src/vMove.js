@@ -3,14 +3,15 @@ let startX;
 let startY;
 let startLeft;
 let startTop;
+let maxWidth;
+let maxHeight;
 
 const handleMouseDown = (e) => {
   currentEl = e.currentTarget;
   startX = e.clientX;
   startY = e.clientY;
-  const rect = currentEl.getBoundingClientRect();
-  startLeft = rect.x;
-  startTop = rect.y;
+  startLeft = currentEl.offsetLeft;
+  startTop = currentEl.offsetTop;
   console.log('down', { startX, startY, startLeft, startTop });
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
@@ -21,8 +22,10 @@ const handleMouseMove = (e) => {
   console.log('move');
   const changedX = e.clientX - startX;
   const changedY = e.clientY - startY;
-  const newX = startLeft + changedX;
-  const newY = startTop + changedY;
+  const limitWidth = maxWidth - currentEl.clientWidth;
+  const limitHeght = maxHeight - currentEl.clientHeight;
+  const newX = Math.min(Math.max(0, startLeft + changedX), limitWidth);
+  const newY = Math.min(Math.max(0, startTop + changedY), limitHeght);
   currentEl.style.left = `${newX}px`;
   currentEl.style.top = `${newY}px`;
 };
@@ -36,7 +39,9 @@ const handleMouseUp = (e) => {
 };
 
 const move = {
-  mounted(el) {
+  mounted(el, { value }) {
+    maxWidth = value.maxWidth;
+    maxHeight = value.maxHeight;
     el.addEventListener('mousedown', handleMouseDown);
   },
   beforeMount(el) {

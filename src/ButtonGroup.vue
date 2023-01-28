@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import { videoWidth, videoHeight } from './consts';
+import { videoWidth, videoHeight, showRect } from './store';
 
 const chunks = [];
 const interval = 50;
@@ -20,6 +20,11 @@ onMounted(() => {
   canvas.height = videoHeight;
   ctx = canvas.getContext('2d');
 });
+
+//显示隐藏选框
+const onToggleRectVisible = () => {
+  showRect.value = !showRect.value;
+};
 
 //点击下载
 const onDownload = () => {
@@ -120,7 +125,10 @@ const onCaptureScreen = async () => {
   <div class="btn-group">
     <button @click="onCaptureScreen">录制屏幕</button>
     <button @click="onStopCaptureSreen">结束屏幕录制</button>
-    <button @click="onDownload">下载</button>
+    <button @click="onDownload">下载视频</button>
+    <button @click="onToggleRectVisible">
+      {{ showRect ? '隐藏选框' : '显示选框' }}
+    </button>
     <button @click="onPlay">开始转gif</button>
   </div>
 </template>
@@ -129,5 +137,8 @@ const onCaptureScreen = async () => {
 .btn-group {
   margin-top: 20px;
   display: flex;
+  button {
+    margin-right: 10px;
+  }
 }
 </style>

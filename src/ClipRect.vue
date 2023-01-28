@@ -1,5 +1,5 @@
 <script setup>
-import { videoWidth, videoHeight } from './consts';
+import { videoWidth, videoHeight, showRect } from './store';
 import vMove from './vMove';
 import vChangeSize from './vChangeSize';
 
@@ -8,7 +8,12 @@ const videoHeightPx = `${videoHeight}px`;
 </script>
 
 <template>
-  <div class="clip-rect" v-change-size v-move>
+  <div
+    class="clip-rect"
+    v-show="showRect"
+    v-change-size="{ maxWidth: videoWidth, maxHeight: videoHeight }"
+    v-move="{ maxWidth: videoWidth, maxHeight: videoHeight }"
+  >
     <div class="corner" data-index="1"></div>
     <div class="corner" data-index="2"></div>
     <div class="corner" data-index="3"></div>
@@ -18,7 +23,7 @@ const videoHeightPx = `${videoHeight}px`;
 
 <style lang="scss" scoped>
 .clip-rect {
-  position: fixed;
+  position: absolute;
   border: 1px solid red;
   left: 0px;
   top: 0px;
@@ -30,6 +35,7 @@ const videoHeightPx = `${videoHeight}px`;
     height: 10px;
     border: 1px solid black;
     position: absolute;
+    background-color: white;
   }
   .corner:nth-child(1) {
     top: -5px;
