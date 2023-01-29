@@ -10,7 +10,7 @@ let cornerIndex;
 let maxWidth;
 let maxHeight;
 
-const changeMap = {
+const changeDirMap = {
   1: {
     x: 1,
     y: 1,
@@ -48,21 +48,21 @@ const handleMouseDown = (e) => {
   startTop = currentEl.offsetTop;
   startWidth = currentEl.clientWidth;
   startHeight = currentEl.clientHeight;
-  console.log('down', {
-    startX,
-    startY,
-    startLeft,
-    startTop,
-    startWidth,
-    startHeight,
-  });
+  // console.log('down', {
+  //   startX,
+  //   startY,
+  //   startLeft,
+  //   startTop,
+  //   startWidth,
+  //   startHeight,
+  // });
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
   document.addEventListener('mouseleave', handleMouseUp);
 };
 
 const handleMouseMove = (e) => {
-  console.log('move');
+  // console.log('move');
   const changedX = e.clientX - startX;
   const changedY = e.clientY - startY;
   let newLeft;
@@ -70,21 +70,35 @@ const handleMouseMove = (e) => {
   let newWidth;
   let newHeight;
 
-  const changeObj = changeMap[cornerIndex];
+  const changeObj = changeDirMap[cornerIndex];
   const { x, y, w, h } = changeObj;
-  newLeft = startLeft + changedX * x;
-  newWidth = startWidth + changedX * w;
-  newTop = startTop + changedY * y;
-  newHeight = startHeight + changedY * h;
 
-  console.log(newLeft + newWidth, newTop + newHeight);
+  const tempLeft = startLeft + changedX * x;
+  const tempTop = startTop + changedY * y;
+  newLeft = Math.max(0, tempLeft);
+  newTop = Math.max(0, tempTop);
+  const tempWidth = startWidth + changedX * w + (tempLeft - newLeft);
+  const tempHeight = startHeight + changedY * h + (tempTop - newTop);
+  newWidth = Math.max(LimitSize, tempWidth);
+  newHeight = Math.max(LimitSize, tempHeight);
+  newLeft =
+    cornerIndex == 2 || cornerIndex == 4
+      ? newLeft
+      : newLeft + (tempWidth - newWidth);
+  newTop =
+    cornerIndex == 3 || cornerIndex == 4
+      ? newTop
+      : newTop + (tempHeight - newHeight);
 
-  if (newLeft < 0 || newTop < 0) return;
-  if (newWidth < LimitSize || newHeight < LimitSize) return;
-  if (newLeft + newWidth > maxWidth) return;
-  if (newTop + newHeight > maxHeight) return;
+  // console.log({ newLeft, newTop, newWidth, newHeight });
 
-  console.log({ newLeft, newTop, newWidth, newHeight });
+  if (newLeft + newWidth > maxWidth) {
+    newWidth = maxWidth - newLeft;
+  }
+  if (newTop + newHeight > maxHeight) {
+    newHeight = maxHeight - newTop;
+  }
+
   currentEl.style.left = `${newLeft}px`;
   currentEl.style.top = `${newTop}px`;
   currentEl.style.width = `${newWidth}px`;
@@ -92,7 +106,7 @@ const handleMouseMove = (e) => {
 };
 
 const handleMouseUp = (e) => {
-  console.log('up');
+  // console.log('up');
   currentEl = null;
   document.removeEventListener('mousemove', handleMouseMove);
   document.removeEventListener('mouseup', handleMouseUp);

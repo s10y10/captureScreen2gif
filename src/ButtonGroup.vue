@@ -28,6 +28,10 @@ const onToggleRectVisible = () => {
 
 //点击下载
 const onDownload = () => {
+  if (!video.src) {
+    console.warn('没有视频下载个啥');
+    return;
+  }
   const a = document.createElement('a');
   a.href = video.src;
   a.download = 'video1.webm';
@@ -58,41 +62,41 @@ const capture = () => {
     render();
     return;
   }
-  console.log(captureArea);
   ctx.drawImage(
     video,
-    captureArea.x,
-    captureArea.y,
-    captureArea.width,
-    captureArea.height,
+    clipRect.x,
+    clipRect.y,
+    clipRect.w,
+    clipRect.h,
     0,
     0,
-    captureArea.width,
-    captureArea.height
+    clipRect.w,
+    clipRect.h
   );
   gif.addFrame(ctx, { copy: true, delay: 10 });
 };
 
 //开始转gif
 const onPlay = () => {
-  clipRect = document.querySelector('.clip-rect');
-  const rect = clipRect.getBoundingClientRect();
-  const {
-    left: rectLeft,
-    top: rectTop,
-    width: rectWidth,
-    height: rectHeight,
-  } = rect;
+  if (!video.duration) {
+    console.warn('还没有视频呢转不了');
+    return;
+  }
 
-  console.log({ rectLeft, rectTop, rectWidth, rectHeight });
+  const { offsetLeft, offsetTop, clientWidth, clientHeight } =
+    document.querySelector('.clip-rect');
+  clipRect = { x: offsetLeft, y: offsetTop, w: clientWidth, h: clientHeight };
+
+  console.log(clipRect);
 
   gif = new GIF({
     workers: 2,
     quality: 10,
-    width: rectWidth,
-    height: rectHeight,
+    width: clientWidth,
+    height: clientHeight,
     workerScript: '/gif.worker.js',
   });
+
   video.play();
   timeId = setInterval(() => {
     capture();

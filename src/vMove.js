@@ -12,14 +12,14 @@ const handleMouseDown = (e) => {
   startY = e.clientY;
   startLeft = currentEl.offsetLeft;
   startTop = currentEl.offsetTop;
-  console.log('down', { startX, startY, startLeft, startTop });
+  // console.log('down', { startX, startY, startLeft, startTop });
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
   document.addEventListener('mouseleave', handleMouseUp);
 };
 
 const handleMouseMove = (e) => {
-  console.log('move');
+  // console.log('move');
   const changedX = e.clientX - startX;
   const changedY = e.clientY - startY;
   const limitWidth = maxWidth - currentEl.clientWidth;
@@ -31,7 +31,7 @@ const handleMouseMove = (e) => {
 };
 
 const handleMouseUp = (e) => {
-  console.log('up');
+  // console.log('up');
   currentEl = null;
   document.removeEventListener('mousemove', handleMouseMove);
   document.removeEventListener('mouseup', handleMouseUp);
