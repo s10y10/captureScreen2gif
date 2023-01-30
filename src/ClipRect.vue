@@ -1,18 +1,18 @@
 <script setup>
-import { videoWidth, videoHeight, showRect } from './store';
+import { viewWidth, viewHeight, showRect } from './store';
 import vMove from './vMove';
 import vChangeSize from './vChangeSize';
 
-const videoWidthPx = `${videoWidth}px`;
-const videoHeightPx = `${videoHeight}px`;
+const videoWidthPx = `${viewWidth.value}px`;
+const videoHeightPx = `${viewHeight.value}px`;
 </script>
 
 <template>
   <div
     class="clip-rect"
     v-show="showRect"
-    v-change-size="{ maxWidth: videoWidth, maxHeight: videoHeight }"
-    v-move="{ maxWidth: videoWidth, maxHeight: videoHeight }"
+    v-change-size="{ maxWidth: viewWidth, maxHeight: viewHeight }"
+    v-move="{ maxWidth: viewWidth, maxHeight: viewHeight }"
   >
     <div class="corner" data-index="1"></div>
     <div class="corner" data-index="2"></div>

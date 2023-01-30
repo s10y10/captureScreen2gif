@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import { videoWidth, videoHeight, showRect } from './store';
+import { showRect, viewWidth, viewHeight } from './store';
 
 const chunks = [];
 const interval = 50;
@@ -16,8 +16,7 @@ let clipRect;
 onMounted(() => {
   video = document.getElementById('video');
   canvas = document.createElement('canvas');
-  canvas.width = videoWidth;
-  canvas.height = videoHeight;
+  canvas.style.cssText = 'position:absolute;left:0;top:0;';
   ctx = canvas.getContext('2d');
 });
 
@@ -70,8 +69,8 @@ const capture = () => {
     clipRect.h,
     0,
     0,
-    clipRect.w,
-    clipRect.h
+    canvas.width,
+    canvas.height
   );
   gif.addFrame(ctx, { copy: true, delay: 10 });
 };
@@ -85,9 +84,20 @@ const onPlay = () => {
 
   const { offsetLeft, offsetTop, clientWidth, clientHeight } =
     document.querySelector('.clip-rect');
-  clipRect = { x: offsetLeft, y: offsetTop, w: clientWidth, h: clientHeight };
+  const { videoWidth, videoHeight } = video;
+  const scaleX = videoWidth / viewWidth.value;
+  const scaleY = videoHeight / viewHeight.value;
+  clipRect = {
+    x: offsetLeft * scaleX,
+    y: offsetTop * scaleY,
+    w: clientWidth * scaleX,
+    h: clientHeight * scaleY,
+  };
 
   console.log(clipRect);
+
+  canvas.width = clientWidth;
+  canvas.height = clientHeight;
 
   gif = new GIF({
     workers: 2,

@@ -1,11 +1,13 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
-export const videoWidth = 960;
-export const videoHeight = 540;
+export const viewWidth = ref(960);
+export const viewHeight = ref(520);
 
-export const videoStyle = {
-  width: `${videoWidth}px`,
-  height: `${videoHeight}px`,
-};
+export const videoStyle = computed(() => {
+  return {
+    width: `${viewWidth.value}px`,
+    height: `${viewHeight.value}px`,
+  };
+});
 
 export const showRect = ref(true);
