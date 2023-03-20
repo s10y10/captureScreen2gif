@@ -2,13 +2,13 @@ lockfileVersion: 5.4
 
 specifiers:
   '@vitejs/plugin-vue': ^4.0.0
-  mouse-tailing: ^0.1.2
+  mouse-tailing: ^0.1.3
   sass: ^1.57.1
   vite: ^4.0.0
   vue: ^3.2.45
 
 dependencies:
-  mouse-tailing: 0.1.2
+  mouse-tailing: 0.1.3
   vue: 3.2.47
 
 devDependencies:
@@ -466,8 +466,8 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
 
-  /mouse-tailing/0.1.2:
-    resolution: {integrity: sha512-6Wu54sga1uja3g91OlsX4+FKKWH3LWesDpWUyDsEpgtOrrOlxGri7H01GWymgHgFtUTwTFi+G4dqy+tm6ZUO/g==}
+  /mouse-tailing/0.1.3:
+    resolution: {integrity: sha512-xU0yB/y/rn7OhOW6bnUdrlUTxMNW18NpuSOiUbEfNU9w0FSgjSsWfIMNG30HBAP+ucvl0iGbFdU9+4z/bMMtcA==}
     dev: false
 
   /nanoid/3.3.4:

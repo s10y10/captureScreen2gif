@@ -2,6 +2,7 @@
 import ButtonGroup from '@/components/ButtonGroup.vue';
 import ClipRect from '@/components/ClipRect.vue';
 import { viewWidthPx, viewHeightPx } from '@/consts';
+import { videoRef } from '@/store';
 
 const videoStyle = {
   width: viewWidthPx,
@@ -12,7 +13,7 @@ const videoStyle = {
 </script>
 
 <template>
-  <video :style="videoStyle" id="video"></video>
+  <video :style="videoStyle" ref="videoRef"></video>
   <ButtonGroup></ButtonGroup>
   <ClipRect></ClipRect>
 </template>

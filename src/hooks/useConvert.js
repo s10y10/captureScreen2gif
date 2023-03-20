@@ -1,46 +1,19 @@
 import { onMounted } from 'vue';
 import { viewWidth, viewHeight } from '@/consts';
 
-export default () => {
-  let video;
+export const useConvert = (videoRef) => {
+  const interval = 50;
   let canvas;
   let ctx;
-
-  const chunks = [];
-  const interval = 50;
   let gif;
-
   let timeId;
-  let stream;
-  let recorder;
   let clipRect;
 
   onMounted(() => {
-    video = document.getElementById('video');
     canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:absolute;left:0;top:0;';
     ctx = canvas.getContext('2d');
   });
-
-  //点击下载
-  const onDownload = () => {
-    if (!video.src) {
-      console.warn('没有视频下载个啥');
-      return;
-    }
-    const a = document.createElement('a');
-    a.href = video.src;
-    a.download = 'video1.webm';
-    a.click();
-  };
-
-  //停止录制屏幕
-  const onStopCaptureSreen = () => {
-    recorder.stop();
-    stream.getTracks().forEach((e) => {
-      e.stop();
-    });
-  };
 
   //渲染生成gif,结束后在新窗口预览
   const render = () => {
@@ -54,6 +27,7 @@ export default () => {
 
   //捕获视频画面
   const capture = () => {
+    const video = videoRef.value;
     console.log(video.currentTime, video.duration);
     if (video.currentTime >= video.duration) {
       clearInterval(timeId);
@@ -76,11 +50,12 @@ export default () => {
 
   //测试截取区域用的函数
   const onTest = () => {
-    onPlay(true);
+    onConvert(true);
   };
 
   //开始转gif
-  const onPlay = (isTesting) => {
+  const onConvert = (isTesting) => {
+    const video = videoRef.value;
     if (!video.duration) {
       console.warn('还没有视频呢转不了');
       return;
@@ -149,32 +124,8 @@ export default () => {
     }, interval);
   };
 
-  //开始录制屏幕
-  const onCaptureScreen = async () => {
-    stream = await navigator.mediaDevices.getDisplayMedia({
-      video: true,
-      audio: true,
-    });
-    video.srcObject = stream;
-    video.play();
-    recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
-    recorder.addEventListener('dataavailable', (e) => {
-      chunks.push(e.data);
-    });
-    recorder.addEventListener('stop', () => {
-      const blob = new Blob(chunks, { type: chunks[0].type });
-      video.pause();
-      video.srcObject = null;
-      video.src = URL.createObjectURL(blob);
-    });
-    recorder.start();
-  };
-
   return {
-    onCaptureScreen,
-    onStopCaptureSreen,
-    onDownload,
-    onPlay,
+    onConvert,
     onTest,
   };
 };

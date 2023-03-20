@@ -1,7 +1,7 @@
 {
-  "name": "vite-project",
+  "name": "captureScreen2gif",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "mouse-tailing": "^0.1.2",
+    "mouse-tailing": "^0.1.3",
     "vue": "^3.2.45"
   },
   "devDependencies": {
