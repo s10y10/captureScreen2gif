@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "mouse-tailing": "^0.1.3",
+    "naive-ui": "^2.34.3",
     "vue": "^3.2.45"
   },
   "devDependencies": {

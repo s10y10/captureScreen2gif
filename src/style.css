@@ -17,11 +17,10 @@ body{
 }
 
 body{
-  background-image: url("bg.png");
+  background-image: url("/bg.png");
   background-repeat: no-repeat;
   background-size:cover;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -29,6 +28,24 @@ body{
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-top: 60px;
+}
+
+button {
+  border-radius: 6px;
+  border: 2px solid transparent;
+  font-size: 16px;
+  padding: 4px 6px;
+  font-family: inherit;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  margin-right: 10px;
+}
+button:hover {
+  border-color: #003333;
+}
+button:active {
+  border-color: #000000;
 }
 
 .canvas-tailing{

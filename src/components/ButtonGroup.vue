@@ -29,24 +29,7 @@ const onToggleRectVisible = () => {
 
 <style lang="scss" scoped>
 .btn-group {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
-  button {
-    border-radius: 8px;
-    border: 2px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    background-color: #f9f9f9;
-    margin-right: 10px;
-  }
-  button:hover {
-    border-color: #003333;
-  }
-  button:active {
-    border-color: #000000;
-  }
 }
 </style>
