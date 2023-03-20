@@ -1,22 +1,16 @@
 <script setup>
-import { showRect } from './store';
+import { showRect } from '@/store';
 import {
   viewWidth as maxWidth,
   viewHeight as maxHeight,
   viewWidthPx,
   viewHeightPx,
-} from './consts';
-import vMove from './vMove';
-import vChangeSize from './vChangeSize';
+} from '@/consts';
+import vOperate from '@/directives/vOperate';
 </script>
 
 <template>
-  <div
-    class="clip-rect"
-    v-show="showRect"
-    v-change-size="{ maxWidth, maxHeight }"
-    v-move="{ maxWidth, maxHeight }"
-  >
+  <div class="clip-rect" v-show="showRect" v-operate="{ maxWidth, maxHeight }">
     <div class="corner" data-index="1"></div>
     <div class="corner" data-index="2"></div>
     <div class="corner" data-index="3"></div>
@@ -27,7 +21,7 @@ import vChangeSize from './vChangeSize';
 <style lang="scss" scoped>
 .clip-rect {
   position: absolute;
-  border: 1px solid red;
+  border: 1px solid #ffffff;
   left: 0px;
   top: 0px;
   width: v-bind(viewWidthPx);

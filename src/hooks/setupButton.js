@@ -1,5 +1,5 @@
 import { onMounted } from 'vue';
-import { viewWidth, viewHeight } from './consts';
+import { viewWidth, viewHeight } from '@/consts';
 
 export default () => {
   let video;

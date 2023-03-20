@@ -1,6 +1,6 @@
 <script setup>
-import { showRect } from './store';
-import setupButton from './setupButton';
+import { showRect } from '@/store';
+import setupButton from '@/hooks/setupButton';
 
 const { onCaptureScreen, onStopCaptureSreen, onDownload, onPlay, onTest } =
   setupButton();

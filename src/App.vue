@@ -1,32 +1,18 @@
 <script setup>
-import ButtonGroup from './ButtonGroup.vue';
-import ClipRect from './ClipRect.vue';
-import { viewWidthPx, viewHeightPx } from './consts';
+import ButtonGroup from '@/components/ButtonGroup.vue';
+import ClipRect from '@/components/ClipRect.vue';
+import { viewWidthPx, viewHeightPx } from '@/consts';
 
 const videoStyle = {
   width: viewWidthPx,
   height: viewHeightPx,
+  border: '1px solid #000000',
+  backgroundColor: '#000000',
 };
 </script>
 
 <template>
-  <div class="app">
-    <video :style="videoStyle" id="video"></video>
-    <ButtonGroup></ButtonGroup>
-    <ClipRect></ClipRect>
-  </div>
+  <video :style="videoStyle" id="video"></video>
+  <ButtonGroup></ButtonGroup>
+  <ClipRect></ClipRect>
 </template>
-
-<style lang="scss" scoped>
-.app {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  #video {
-    border: 1px solid black;
-  }
-}
-</style>

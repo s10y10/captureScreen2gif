@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "mouse-tailing": "^0.1.2",
     "vue": "^3.2.45"
   },
   "devDependencies": {

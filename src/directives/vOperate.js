@@ -10,6 +10,8 @@ let cornerIndex;
 let maxWidth;
 let maxHeight;
 
+let isMoveMode = true;
+
 const changeDirMap = {
   1: {
     x: 1,
@@ -37,32 +39,40 @@ const changeDirMap = {
   },
 };
 
+//鼠标按下,记录初始状态和模式
 const handleMouseDown = (e) => {
-  if (!e.target.classList.contains('corner')) return;
-  e.stopImmediatePropagation();
+  isMoveMode = !e.target.classList.contains('corner');
+
   currentEl = e.currentTarget;
   cornerIndex = e.target.dataset.index;
+
   startX = e.clientX;
   startY = e.clientY;
   startLeft = currentEl.offsetLeft;
   startTop = currentEl.offsetTop;
   startWidth = currentEl.clientWidth;
   startHeight = currentEl.clientHeight;
-  // console.log('down', {
-  //   startX,
-  //   startY,
-  //   startLeft,
-  //   startTop,
-  //   startWidth,
-  //   startHeight,
-  // });
+
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', handleMouseUp);
   document.addEventListener('mouseleave', handleMouseUp);
 };
 
-const handleMouseMove = (e) => {
-  // console.log('move');
+//处理移动模式的计算
+const _handleMoveMode = (e) => {
+  const changedX = e.clientX - startX;
+  const changedY = e.clientY - startY;
+
+  const limitWidth = maxWidth - currentEl.clientWidth;
+  const limitHeght = maxHeight - currentEl.clientHeight;
+  const newX = Math.min(Math.max(0, startLeft + changedX), limitWidth);
+  const newY = Math.min(Math.max(0, startTop + changedY), limitHeght);
+  currentEl.style.left = `${newX}px`;
+  currentEl.style.top = `${newY}px`;
+};
+
+//处理改变大小模式的计算
+const _handleChangeSizeMode = (e) => {
   const changedX = e.clientX - startX;
   const changedY = e.clientY - startY;
   let newLeft;
@@ -90,8 +100,6 @@ const handleMouseMove = (e) => {
       ? newTop
       : newTop + (tempHeight - newHeight);
 
-  // console.log({ newLeft, newTop, newWidth, newHeight });
-
   if (newLeft + newWidth > maxWidth) {
     newWidth = maxWidth - newLeft;
   }
@@ -105,15 +113,26 @@ const handleMouseMove = (e) => {
   currentEl.style.height = `${newHeight}px`;
 };
 
+//鼠标移动,分发事件
+const handleMouseMove = (e) => {
+  if (!currentEl) return;
+  if (isMoveMode) {
+    _handleMoveMode(e);
+  } else {
+    _handleChangeSizeMode(e);
+  }
+};
+
+//鼠标抬起,移除事件监听
 const handleMouseUp = (e) => {
-  // console.log('up');
   currentEl = null;
   document.removeEventListener('mousemove', handleMouseMove);
   document.removeEventListener('mouseup', handleMouseUp);
   document.removeEventListener('mouseleave', handleMouseUp);
 };
 
-const changeSize = {
+export default {
+  name: 'operate',
   mounted(el, { value }) {
     maxWidth = value.maxWidth;
     maxHeight = value.maxHeight;
@@ -122,9 +141,4 @@ const changeSize = {
   beforeMount(el) {
     el.removeEventListener('mousedown', handleMouseDown);
   },
-};
-
-export default {
-  name: 'changeSize',
-  ...changeSize,
 };
