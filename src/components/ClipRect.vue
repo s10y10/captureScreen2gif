@@ -1,5 +1,4 @@
 <script setup>
-import { showRect } from '@/store';
 import {
   viewWidth as maxWidth,
   viewHeight as maxHeight,
@@ -10,7 +9,7 @@ import vOperate from '@/directives/vOperate';
 </script>
 
 <template>
-  <div class="clip-rect" v-show="showRect" v-operate="{ maxWidth, maxHeight }">
+  <div class="clip-rect" v-operate="{ maxWidth, maxHeight }">
     <div class="corner" data-index="1"></div>
     <div class="corner" data-index="2"></div>
     <div class="corner" data-index="3"></div>

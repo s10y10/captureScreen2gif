@@ -1,1 +1,0 @@
-export const formatTime = (second) => {};

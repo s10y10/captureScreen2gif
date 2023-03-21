@@ -3,7 +3,7 @@ import ButtonGroup from '@/components/ButtonGroup.vue';
 import ClipRect from '@/components/ClipRect.vue';
 import VideoControlBar from '@/components/VideoControlBar.vue';
 import { viewWidthPx, viewHeightPx } from '@/consts';
-import { videoRef } from '@/store';
+import { videoRef, hasVideo } from '@/store';
 
 const videoStyle = {
   width: viewWidthPx,
@@ -16,7 +16,7 @@ const videoStyle = {
 
 <template>
   <video :style="videoStyle" ref="videoRef"></video>
-  <VideoControlBar></VideoControlBar>
+  <VideoControlBar v-if="hasVideo"></VideoControlBar>
   <ButtonGroup></ButtonGroup>
   <ClipRect></ClipRect>
 </template>

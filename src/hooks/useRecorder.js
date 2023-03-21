@@ -1,4 +1,6 @@
-export const useRecorder = (videoRef) => {
+import { videoRef, hasVideo } from '@/store';
+
+export const useRecorder = () => {
   const chunks = [];
   let stream;
   let recorder;
@@ -13,6 +15,7 @@ export const useRecorder = (videoRef) => {
 
   //开始录制屏幕
   const onCaptureScreen = async () => {
+    hasVideo.value = false;
     stream = await navigator.mediaDevices.getDisplayMedia({
       video: true,
       audio: true,
@@ -29,6 +32,8 @@ export const useRecorder = (videoRef) => {
       video.pause();
       video.srcObject = null;
       video.src = URL.createObjectURL(blob);
+      hasVideo.value = true;
+      video.play();
     });
     recorder.start();
   };

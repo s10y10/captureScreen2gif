@@ -1,4 +1,6 @@
-export const useDownload = (videoRef) => {
+import { videoRef } from '@/store';
+
+export const useDownload = () => {
   //点击下载
   const onDownload = () => {
     if (!videoRef.value || !videoRef.value.src) {

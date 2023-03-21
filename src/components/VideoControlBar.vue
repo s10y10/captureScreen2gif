@@ -1,32 +1,57 @@
 <script setup>
 import { NSlider, NInputNumber } from 'naive-ui';
 import { ref } from 'vue';
+import { videoRef, videoSlice } from '@/store';
 
-const value = ref([0, 50]);
-const maxValue = ref(200);
+let startTime;
+let endTime;
 
-const onFormatTooltip = (value) => {
-  return value;
+const videoEl = videoRef.value;
+videoEl.addEventListener('durationchange', function () {
+  console.log('duration change');
+  const duration = videoEl.duration;
+  if (duration !== Infinity) {
+    videoSlice.value = [0, duration];
+    maxValue.value = duration;
+    startTime = 0;
+    endTime = duration;
+  }
+});
+
+videoEl.addEventListener('timeupdate', function () {
+  if (videoEl.currentTime >= endTime) {
+    videoEl.pause();
+    videoEl.currentTime = startTime;
+    videoEl.play();
+  }
+});
+
+const maxValue = ref(0);
+
+const handleSlice = () => {
+  videoEl.pause();
+  startTime = videoSlice.value[0];
+  endTime = videoSlice.value[1];
+  videoEl.currentTime = startTime;
+  videoEl.play();
 };
 </script>
 
 <template>
   <div class="controlbar">
-    <button class="button">播放</button>
-    <button class="button">暂停</button>
+    <button class="button" @click="handleSlice">裁剪</button>
     <div class="timebar">
       <div>截取时间：</div>
       <div class="naive-custom-bar">
         <NSlider
           :max="maxValue"
-          v-model:value="value"
-          :format-tooltip="onFormatTooltip"
+          v-model:value="videoSlice"
           range
-          :step="1"
+          :step="0.1"
           placement="bottom"
         />
-        <NInputNumber v-model:value="value[0]" size="small" />
-        <NInputNumber v-model:value="value[1]" size="small" />
+        <NInputNumber v-model:value="videoSlice[0]" size="small" />
+        <NInputNumber v-model:value="videoSlice[1]" size="small" />
       </div>
     </div>
   </div>

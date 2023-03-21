@@ -1,7 +1,8 @@
 import { onMounted } from 'vue';
 import { viewWidth, viewHeight } from '@/consts';
+import { videoRef, videoSlice } from '@/store';
 
-export const useConvert = (videoRef) => {
+export const useConvert = () => {
   const interval = 50;
   let canvas;
   let ctx;
@@ -28,8 +29,8 @@ export const useConvert = (videoRef) => {
   //捕获视频画面
   const capture = () => {
     const video = videoRef.value;
-    console.log(video.currentTime, video.duration);
-    if (video.currentTime >= video.duration) {
+    console.log(video.currentTime, videoSlice.value);
+    if (video.currentTime >= videoSlice.value[1]) {
       clearInterval(timeId);
       render();
       return;
@@ -118,6 +119,8 @@ export const useConvert = (videoRef) => {
       workerScript: '/gif.worker.js',
     });
 
+    video.pause();
+    video.currentTime = videoSlice.value[0];
     video.play();
     timeId = setInterval(() => {
       capture();
