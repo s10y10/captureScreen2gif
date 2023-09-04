@@ -17,9 +17,7 @@ body{
 }
 
 body{
-  background-image: url("/bg.png");
-  background-repeat: no-repeat;
-  background-size:cover;
+  background: radial-gradient(circle, #5170f8, #030762);
   display: flex;
   justify-content: center;
 }
