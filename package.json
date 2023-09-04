@@ -1,5 +1,5 @@
 {
-  "name": "captureScreen2gif",
+  "name": "capture-screen2gif",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "mouse-tailing": "^0.1.5",
-    "naive-ui": "^2.34.3",
-    "vue": "^3.2.47"
+    "mouse-tailing": "^0.2.0",
+    "naive-ui": "^2.34.4",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "sass": "^1.59.3",
-    "vite": "^4.1.4"
+    "@vitejs/plugin-vue": "^4.3.4",
+    "sass": "^1.66.1",
+    "vite": "^4.4.9"
   }
 }
