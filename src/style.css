@@ -45,7 +45,3 @@ button:hover {
 button:active {
   border-color: #000000;
 }
-
-.canvas-tailing{
-  z-index: -1!important;
-}
