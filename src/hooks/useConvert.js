@@ -1,9 +1,9 @@
 import { onMounted } from 'vue';
-import { viewWidth, viewHeight } from '@/consts';
+import { viewWidth, viewHeight, workerCode } from '@/consts';
 import { videoRef, videoSlice } from '@/store';
 
 export const useConvert = () => {
-  const interval = 50;
+  const interval = 1000 / 30;
   let canvas;
   let ctx;
   let gif;
@@ -116,7 +116,9 @@ export const useConvert = () => {
       quality: 10,
       width: clientWidth,
       height: clientHeight,
-      workerScript: '/gif.worker.js',
+      workerScript: URL.createObjectURL(
+        new Blob([workerCode], { type: 'application/javascript' })
+      ),
     });
 
     video.pause();

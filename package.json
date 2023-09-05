@@ -1,21 +1,49 @@
 {
-  "name": "capture-screen2gif",
-  "private": true,
-  "version": "0.1.0",
+  "name": "screen2gif",
+  "private": false,
+  "version": "0.0.1",
   "type": "module",
+  "description": "截屏并输出gif",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/screen2gif.umd.cjs",
+  "module": "./dist/screen2gif.js",
+  "exports": {
+    ".": {
+      "import": "./dist/screen2gif.js",
+      "require": "./dist/screen2gif.umd.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s10y10/captureScreen2gif.git"
+  },
+  "keywords": [
+    "截屏",
+    "gif"
+  ],
+  "author": "s10y10",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/s10y10/captureScreen2gif/issues"
+  },
+  "homepage": "https://github.com/s10y10/captureScreen2gif",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish": "npm publish --access=public --registry=https://registry.npmjs.org/",
+    "publish:beta": "npm publish --access=public --registry=https://registry.npmjs.org/ --tag=beta"
   },
   "dependencies": {
-    "mouse-tailing": "^0.2.0",
     "naive-ui": "^2.34.4",
     "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
     "sass": "^1.66.1",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
   }
 }

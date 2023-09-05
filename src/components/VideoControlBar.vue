@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import { videoRef, videoSlice } from '@/store';
 
 let startTime;
-let endTime;
 
 const videoEl = videoRef.value;
 videoEl.addEventListener('durationchange', function () {
@@ -14,15 +13,6 @@ videoEl.addEventListener('durationchange', function () {
     videoSlice.value = [0, duration];
     maxValue.value = duration;
     startTime = 0;
-    endTime = duration;
-  }
-});
-
-videoEl.addEventListener('timeupdate', function () {
-  if (videoEl.currentTime >= endTime) {
-    videoEl.pause();
-    videoEl.currentTime = startTime;
-    videoEl.play();
   }
 });
 
@@ -31,7 +21,6 @@ const maxValue = ref(0);
 const handleSlice = () => {
   videoEl.pause();
   startTime = videoSlice.value[0];
-  endTime = videoSlice.value[1];
   videoEl.currentTime = startTime;
   videoEl.play();
 };
